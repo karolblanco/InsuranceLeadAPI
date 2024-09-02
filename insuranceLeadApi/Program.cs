@@ -16,6 +16,11 @@ builder.Services.AddScoped<PolicyHolderService>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Configuration
+    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+    .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true)
+    .AddEnvironmentVariables();
+
 builder.Services.AddDbContext<InsuranceDBContext>(options =>
       options.UseNpgsql(builder.Configuration.GetConnectionString("DatabaseConnection")));
 
